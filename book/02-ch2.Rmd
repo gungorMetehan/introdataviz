@@ -247,7 +247,7 @@ ggplot(dat, aes(language)) +
                      breaks = c(0,10,20,30,40,50))
 ```
 
--   `name` controls the overall name of the axis (note the use of quotation marks)
+-   `name` controls the overall name of the axis (note the use of quotation marks).
 
 -   `labels` controls the names of the conditions with a discrete variable.
 

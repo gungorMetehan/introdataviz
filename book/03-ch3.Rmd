@@ -4,7 +4,7 @@
 
 To visualise the experimental reaction time and accuracy data using `ggplot2`, we first need to reshape the data from wide format to long format. This step can cause friction with novice users of R. Traditionally, psychologists have been taught data skills using wide-format data. Wide-format data typically has one row of data for each participant, with separate columns for each score or variable. For repeated-measures variables, the dependent variable is split across different columns. For between-groups variables, a separate column is added to encode the group to which a participant or observation belongs. 
 
-The simulated lexical decision data is currently in wide format (see Table\ \@ref(tab:wide-data)), where each participant's aggregated [^3] reaction time and accuracy for each level of the within-subject variable is split across multiple columns for the repeated factor of conditon (words versus non-words).
+The simulated lexical decision data is currently in wide format (see Table\ \@ref(tab:wide-data)), where each participant's aggregated [^3] reaction time and accuracy for each level of the within-subject variable is split across multiple columns for the repeated factor of condition (words versus non-words).
 
 [^3]: In this tutorial we have chosen to gloss over the data processing steps that must occur to get from the raw data to aggregated values. This type of processing requires a more extensive tutorial than we can provide in the current paper. More importantly, it is still possible to use R for data visualisation having done the preparatory steps using existing workflows in Excel and SPSS. We bypass these initial steps and focus on tangible outputs that may then encourage further mastery of reproducible methods. Collectively we tend to call the steps for reshaping data and for processing raw data or for getting data ready to use statistical functions "wrangling".
 
@@ -54,7 +54,7 @@ long <- pivot_longer(data = dat,
 
 -   As with the other tidyverse functions, the first argument specifies the dataset to use as the base, in this case `dat`. This argument name is often dropped in examples.
 
--   `cols` specifies all the columns you want to transform. The easiest way to visualise this is to think about which columns would be the same in the new long-form dataset and which will change. If you refer back to Table\ \@ref(tab:wide-data), you can see that `id`, `age`, and `language` all remain, while the columns that contain the measurements of the DVs change. The colon notation `first_column:last_column` is used to select all variables from the first column specified to the last  In our code, `cols` specifies that the columns we want to transform are `rt_word` to `acc_nonword`.
+-   `cols` specifies all the columns you want to transform. The easiest way to visualise this is to think about which columns would be the same in the new long-form dataset and which will change. If you refer back to Table\ \@ref(tab:wide-data), you can see that `id`, `age`, and `language` all remain, while the columns that contain the measurements of the DVs change. The colon notation `first_column:last_column` is used to select all variables from the first column specified to the last. In our code, `cols` specifies that the columns we want to transform are `rt_word` to `acc_nonword`.
 
 -   `names_to` specifies the name of the new column that will be created. This column will contain the names of the selected existing columns.
 
@@ -68,7 +68,7 @@ head(long) %>% knitr::kable(digits = 2, caption = "Data in long format with mixe
 
 ### Step 2: `pivot_longer()` adjusted
 
-The problem with the above long-format data-set is that `dv_condition` combines two variables - it has information about the type of DV and the condition of the IV. To account for this, we include a new argument `names_sep` and adjust `name_to` to specify the creation of two new columns. Note that we are pivoting the same wide-format dataset `dat` as we did in step 1.
+The problem with the above long-format data-set is that `dv_condition` combines two variables - it has information about the type of DV and the condition of the IV. To account for this, we include a new argument `names_sep` and adjust `names_to` to specify the creation of two new columns. Note that we are pivoting the same wide-format dataset `dat` as we did in step 1.
 
 ```{r}
 long2 <- pivot_longer(data = dat, 
@@ -177,7 +177,7 @@ ggplot(dat_long, aes(x = rt, fill = condition)) +
 
 `r hide("Correction to paper")`
 
-Please note that the code and figure for this plot has been corrected from the published paper due to the labels "Word" and "Non-word" being incorrectly reversed. This is of course mortifying as authors, although it does provide a useful teachable moment that R will do what you tell it to do, no more, no less, regardless of whether what you tell it to do is wrong.
+Please note that the code and figure for this plot have been corrected from the published paper due to the labels "Word" and "Non-word" being incorrectly reversed. This is, of course, mortifying as authors, although it does provide a useful teachable moment that R will do what you tell it to do, no more, no less, regardless of whether what you tell it to do is wrong.
 
 `r unhide()`
 
@@ -218,7 +218,7 @@ Please note that the code and figure for this plot has been corrected from the p
 
 ## Long to wide format
 
-Following the rule that *anything that shares an axis should probably be in the same column* means that we will frequently need our data in long-form when using `ggplot2`, However, there are some cases when wide format is necessary. For example, we may wish to visualise the relationship between reaction time in the word and non-word conditions. This requires that the corresponding word and non-word values for each participant be in the same row. The easiest way to achieve this in our case would simply be to use the original wide-format data as the input:
+Following the rule that *anything that shares an axis should probably be in the same column* means that we will frequently need our data in long-form when using `ggplot2`. However, there are some cases when wide format is necessary. For example, we may wish to visualise the relationship between reaction time in the word and non-word conditions. This requires that the corresponding word and non-word values for each participant be in the same row. The easiest way to achieve this in our case would simply be to use the original wide-format data as the input:
 
 ```{r message = FALSE, fig.cap="Scatterplot with data grouped by language group"}
 ggplot(dat, aes(x = rt_word, y = rt_nonword, colour = language)) +
@@ -246,7 +246,7 @@ dat_wide %>%
 
 ### Accessible colour schemes
 
-One of the drawbacks of using `ggplot2` for visualisation is that the default colour scheme is not accessible (or visually appealing). The red and green default palette is difficult for colour-blind people to differentiate, and also does not display well in greyscale. You can specify exact custom colours for your plots, but one easy option is to use a custom colour palette. These take the same arguments as their default `scale` sister functions for updating axis names and labels, but display plots in contrasting colours that can be read by colour-blind people and that also print well in grey scale. For categorical colours, the "Set2", "Dark2" and "Paired" palettes from the `brewer` scale functions are colourblind-safe (but are hard to distinhuish in greyscale). For continuous colours, such as when colour is representing the magnitude of a correlation in a tile plot, the `viridis` scale functions provide a number of different colourblind and greyscale-safe options.
+One of the drawbacks of using `ggplot2` for visualisation is that the default colour scheme is not accessible (or visually appealing). The red and green default palette is difficult for colour-blind people to differentiate, and also does not display well in greyscale. You can specify exact custom colours for your plots, but one easy option is to use a custom colour palette. These take the same arguments as their default `scale` sister functions for updating axis names and labels, but display plots in contrasting colours that can be read by colour-blind people and that also print well in grey scale. For categorical colours, the "Set2", "Dark2" and "Paired" palettes from the `brewer` scale functions are colourblind-safe (but are hard to distinguish in greyscale). For continuous colours, such as when colour is representing the magnitude of a correlation in a tile plot, the `viridis` scale functions provide a number of different colourblind and greyscale-safe options.
 
 ```{r brewer, warning = FALSE,fig.cap="Use the Dark2 brewer colour scheme for accessibility.", message = FALSE}
 ggplot(dat_long, aes(x = rt, y = age, colour = condition)) +
@@ -283,9 +283,9 @@ ggplot(dat_long, aes(x = rt, y = age)) +
 
 ## Activities 2
 
-Before you move on try the following:
+Before you move on, try the following:
 
-1.   Use `fill` to created grouped histograms that display the distributions for `rt` for each `language` group separately and also edit the fill axis labels. Try adding `position = "dodge"` to `geom_histogram()` to see what happens.
+1.   Use `fill` to create grouped histograms that display the distributions for `rt` for each `language` group separately and also edit the fill axis labels. Try adding `position = "dodge"` to `geom_histogram()` to see what happens.
 
 `r hide("Solution 1")`
 ```{r eval = FALSE}

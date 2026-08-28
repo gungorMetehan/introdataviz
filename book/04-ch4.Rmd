@@ -31,7 +31,7 @@ ggplot(dat_long, aes(x = condition, y = acc, fill = language)) +
 
 `r hide("Correction to paper")`
 
-Please note that the code and figure for this plot has been corrected from the published paper due to the labels "Word" and "Non-word" being incorrectly reversed. This is of course mortifying as authors, although it does provide a useful teachable moment that R will do what you tell it to do, no more, no less, regardless of whether what you tell it to do is wrong.
+Please note that the code and figure for this plot have been corrected from the published paper due to the labels "Word" and "Non-word" being incorrectly reversed. This is of course mortifying as authors, although it does provide a useful teachable moment that R will do what you tell it to do, no more, no less, regardless of whether what you tell it to do is wrong.
 
 `r unhide()`
 
@@ -60,7 +60,7 @@ Please note that the code and figure for this plot has been corrected from the p
 
 ## Bar chart of means
 
-Commonly, rather than visualising distributions of raw data, researchers will wish to visualise means using a bar chart with error bars. As with SPSS and Excel, `ggplot2` requires you to calculate the summary statistics and then plot the summary. There are at least two ways to do this, in the first you make a table of summary statistics as we did earlier when calculating the participant demographics and then plot that table. The second approach is to calculate the statistics within a layer of the plot. That is the approach we will use below. 
+Commonly, rather than visualising distributions of raw data, researchers will wish to visualise means using a bar chart with error bars. As with SPSS and Excel, `ggplot2` requires you to calculate the summary statistics and then plot the summary. There are at least two ways to do this. In the first you make a table of summary statistics as we did earlier when calculating the participant demographics and then plot that table. The second approach is to calculate the statistics within a layer of the plot. That is the approach we will use below. 
 
 First we present code for making a bar chart. The code for bar charts is here because it is a common visualisation that is familiar to most researchers. However, we would urge you to use a visualisation that provides more transparency about the distribution of the raw data, such as the violin-boxplots we will present in the next section.
 
@@ -68,14 +68,14 @@ To summarise the data into means, we use a new function `stat_summary()`. Rather
 
 -   `fun` specifies the summary function that gives us the y-value we want to plot, in this case, `mean`.
 
--   `geom` specifies what shape or plot we want to use to display the summary. For the first layer we will specify `bar`. As with the other geom-type functions we have shown you, this part of the `stat_summary()` function is tied to the aesthetic mapping in the first line of code.  The underlying statistics for a bar chart means that we must specify and IV (x-axis) as well as the DV (y-axis).
+-   `geom` specifies what shape or plot we want to use to display the summary. For the first layer we will specify `bar`. As with the other geom-type functions we have shown you, this part of the `stat_summary()` function is tied to the aesthetic mapping in the first line of code. The underlying statistics for a bar chart means that we must specify an IV (x-axis) as well as the DV (y-axis).
 
 ```{r badbar1, fig.cap="Bar plot of means."}
 ggplot(dat_long, aes(x = condition, y = rt)) +
   stat_summary(fun = "mean", geom = "bar")
 ```
 
-To add the error bars, another layer is added with a second call to `stat_summary`. This time, the function represents the type of error bars we wish to draw, you can choose from `mean_se` for standard error, `mean_cl_normal` for confidence intervals, or `mean_sdl` for standard deviation. `width` controls the width of the error bars - try changing the value to see what happens.
+To add the error bars, another layer is added with a second call to `stat_summary`. This time, the function represents the type of error bars we wish to draw. You can choose from `mean_se` for standard error, `mean_cl_normal` for confidence intervals, or `mean_sdl` for standard deviation. `width` controls the width of the error bars - try changing the value to see what happens.
 
 -   Whilst `fun` returns a single value (y) per condition, `fun.data` returns the y-values we want to plot plus their minimum and maximum values, in this case, `mean_se`
 
@@ -159,7 +159,7 @@ ggplot(dat_long, aes(x = condition, y= rt, fill = language)) +
 
 ## Customisation part 3
 
-Combining multiple type of plots can present an issue with the colours, particularly when the fill and line colours are similar. For example, it is hard to make out the boxplot against the violin plot above.
+Combining multiple types of plots can present an issue with the colours, particularly when the fill and line colours are similar. For example, it is hard to make out the boxplot against the violin plot above.
 
 There are a number of solutions to this problem. One solution is to adjust the transparency of each layer using `alpha`. The exact values needed can take trial and error:
 
@@ -181,7 +181,7 @@ ggplot(dat_long, aes(x = condition, y= rt, fill = language,
   scale_fill_brewer(palette = "Dark2")
 ```
 
-Alternatively, we can change the fill of individual geoms by adding `fill = "colour"` to each relevant geom. In the example below, we fill the boxplots with white. Since all of the boxplots are no longer being filled according to language, but you still want a four separate boxplots, you have to add an extra mapping to `geom_boxplot()` to specify that you want the output grouped by the interaction of condition and language.
+Alternatively, we can change the fill of individual geoms by adding `fill = "colour"` to each relevant geom. In the example below, we fill the boxplots with white. Since all of the boxplots are no longer being filled according to language, but you still want four separate boxplots, you have to add an extra mapping to `geom_boxplot()` to specify that you want the output grouped by the interaction of condition and language.
 
 ```{r viobox5, fig.cap="Manually changing the fill color.",  warning = FALSE}
 ggplot(dat_long, aes(x = condition, y= rt, fill = language)) +

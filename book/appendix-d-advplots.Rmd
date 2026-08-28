@@ -4,7 +4,7 @@ This appendix provides some examples of more complex plots. See Lisa's tutorials
 
 ## Easter Egg - Overlaying Plots
 
-Hopefully from some of the materials we have shown you, you will have found ways of presenting data in an informative manner - for example, we have shown violin plots and how they can be effective, when combined with boxplots, at displaying distributions. However, if you are familiar with other software you may be used to seeing this sort of information displayed differently, as perhaps a histogram with a normal curve overlaid. Whist the violin plots are better to convey that information we thought it might help to see alternative approaches here. Really it is about overlaying some of the plots we have already shown, but with some slight adjustments. For example, lets look at the histogram and density plot of reaction times we saw earlier - shown here side by side for convenience.
+Hopefully from some of the materials we have shown you, you will have found ways of presenting data in an informative manner - for example, we have shown violin plots and how they can be effective, when combined with boxplots, at displaying distributions. However, if you are familiar with other software you may be used to seeing this sort of information displayed differently, as perhaps a histogram with a normal curve overlaid. Whilst the violin plots are better to convey that information we thought it might help to see alternative approaches here. Really it is about overlaying some of the plots we have already shown, but with some slight adjustments. For example, let's look at the histogram and density plot of reaction times we saw earlier - shown here side by side for convenience.
 
 ```{r}
 a <- ggplot(dat_long, aes(x = rt)) +
@@ -36,7 +36,7 @@ a + inset_element(b, left = 0.6, bottom = 0.6, right = 1, top = 1)
 
 ```
 
-But of course that only works if there is space for the inset and it doesn't start overlapping on the main figure. This next approach fully overlays the density plot on top of the histogram. There is one main change though and that is the addition of `aes(y=..density..)` within `geom_histogram()`. This tells the histogram to now be plotted in terms of density and not count, meaning that the density plot and the histogram and now based on the same y-axis:
+But of course that only works if there is space for the inset and it doesn't start overlapping on the main figure. This next approach fully overlays the density plot on top of the histogram. There is one main change though and that is the addition of `aes(y=..density..)` within `geom_histogram()`. This tells the histogram to now be plotted in terms of density and not count, meaning that the density plot and the histogram are now based on the same y-axis:
 
 ```{r overlay2, fig.cap="A histogram with density plot overlaid"}
 ggplot(dat_long, aes(x = rt)) +
@@ -46,7 +46,7 @@ ggplot(dat_long, aes(x = rt)) +
   scale_x_continuous(name = "Reaction time (ms)")
 ```
 
-The main thing to not in the above figure is that both the histogram and the density plot are based on the data you have collected. An alternative that you might want to look at it is plotting a normal distribution on top of the histogram based on the mean and standard deviation of the data. This is a bit more complicated but works as follows:
+The main thing to note in the above figure is that both the histogram and the density plot are based on the data you have collected. An alternative that you might want to look at it is plotting a normal distribution on top of the histogram based on the mean and standard deviation of the data. This is a bit more complicated but works as follows:
 
 ```{r overlay3, fig.cap="A histogram with normal distribution based on the data overlaid"}
 ggplot(dat_long, aes(rt)) +
@@ -78,7 +78,7 @@ ggplot(dat_long, aes(rt)) +
 
 ## Easter Egg - A Dumbbell Plot
 
-A nice way of representing a change across different conditions, within participants or across timepoints, is the dumbbell chart. These figures can do a lot of heavy lifting in conveying patterns within the data and are not as hard to create in ggplot as they might first appear. The premise is that you need the start point, in terms of x (`x =`) and y (`y =`), and the end point, again in terms of x (`xend =`) and y (`yend =`). You draw a line between those two points using `geom_segment()` and then add a data point at the both ends of the line using `geom_point()`. So for example, we will use the average accuracy scores for the word and non-word conditions, for monolingual and bilinguals, to demonstrate. We could do the same figure for all participants but as we have `r dim(dat)[1]` participants it can be a bit **wild**. We first need to create the averages using a little bit of data wrangling we have seen:
+A nice way of representing a change across different conditions, within participants or across timepoints, is the dumbbell chart. These figures can do a lot of heavy lifting in conveying patterns within the data and are not as hard to create in ggplot as they might first appear. The premise is that you need the start point, in terms of x (`x =`) and y (`y =`), and the end point, again in terms of x (`xend =`) and y (`yend =`). You draw a line between those two points using `geom_segment()` and then add a data point at both ends of the line using `geom_point()`. So, for example, we will use the average accuracy scores for the word and non-word conditions, for monolingual and bilinguals, to demonstrate. We could do the same figure for all participants but as we have `r dim(dat)[1]` participants it can be a bit **wild**. We first need to create the averages using a little bit of data wrangling we have seen:
 
 ```{r create-avg, echo = TRUE}
 dat_avg <- dat %>%
@@ -122,7 +122,7 @@ b <- a +  geom_segment(aes(x = mean_acc_nonword, y = language,
 a + b
 ```
 
-and the remaining lines add the dots at the end of the dumbells and changes the x axis label to something useful:
+and the remaining lines add the dots at the end of the dumbbells and change the x-axis label to something useful:
 
 ```{r dumbbell3, echo = FALSE, fig.cap="Adding the weights to the dumbbells. Red dots are added in one layer to show Average Accuracy of Non-word trials, and blue dots are added in final layer to show Average Accuracy of Word trials."}
 a <- ggplot(dat_avg) +
@@ -190,7 +190,7 @@ The remainder of the code is used to remove the various panel and tick lines, an
 
 ## Easter Egg - A Lollipop Plot
 
-Lollipop plots are a sweet alternative to pie charts for representing relative counts. They're  a combination of `geom_linerange()` and `geom_point()`. Use `coord_flip()` to make them horizontal.
+Lollipop plots are a sweet alternative to pie charts for representing relative counts. They're a combination of `geom_linerange()` and `geom_point()`. Use `coord_flip()` to make them horizontal.
 
 ```{r, fig.cap="A lollipop plot showing the number of different types of pets."}
 pets <- c("cats", "dogs", "ferrets", "fish", "hamsters", "snakes")

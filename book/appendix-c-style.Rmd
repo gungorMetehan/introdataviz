@@ -166,7 +166,7 @@ wrap_plots(plots, ncol = 2)
 
 ### Viridis Palettes
 
-Viridis palettes are very good for colourblind-safe and greyscale-safe plots. The work with any number of categories, but are best for larger numbers of categories or continuous colours.
+Viridis palettes are very good for colourblind-safe and greyscale-safe plots. They work with any number of categories, but are best for larger numbers of categories or continuous colours.
 
 #### Discrete Viridis Palettes
 
@@ -458,7 +458,7 @@ mytheme <- theme_minimal(
                                     color = "grey30"),
     text             = element_text(color = "white"),
     strip.text       = element_text(hjust = 0), # left justify
-    strip.background = element_rect(fill = "grey60", ),
+    strip.background = element_rect(fill = "grey60"),
     axis.text        = element_text(color = "grey60"),
     axis.line        = element_line(color = "grey60", size = 1), 
     panel.grid       = element_blank(),
